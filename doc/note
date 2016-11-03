@@ -1,0 +1,135 @@
+
+# 1.0响应式网站概念
+
+1.弹性网格布局
+2.弹性图片
+3.媒体查询
+
+# 1.5 浏览器
+
+QQ 微信X5内核
+
+
+#1.6 媒体查询
+
+css3 media query
+@media all and (min-width:800px) and (orientation:landscape){
+	
+}
+
+
+# 1.7 媒体查询2
+
+布局视口 
+宽高不会变 把页面虚拟的渲染出来
+
+可视视口 
+网页在移动设备上呈现出来的宽度高度
+随着用户手指缩放而改变宽高 进而改可视视口的大小
+知道概念就行了 每个设备 每个用户的操作 可视视口无法控制
+
+
+理想视口
+布局视口在设备上的最佳尺寸,
+就不用传统的960px来布局
+不需要缩放就可以很好查看页面 :
+禁用了缩放功能
+<meta name="viewport" content="
+							width=device-width,
+							height=device-height,
+							minimum-scale=1.0,
+							maximum-scale=1.0
+							user-scalable=no
+"/>	
+
+
+#1.9 如何分析设计图
+
+网站开发前的工作：需求调研 UI设计，评审 原型设计
+也就是网站的受众有哪些，为何要设计这个网站，或者解决什么样的问题,如何呈现
+
+
+1.和UI 设计师 产品交流
+2.是否有相应的设计规范 字体颜色字号间距等
+
+3张设计图 对应大 中 小分辨率下呈现的效果
+有些地方结构是改变（换位置或者做减法）
+有的地方LOGO宽高就不会变
+
+# 1.10
+响应式网站设计实践原则
+渐进增强 优雅降级
+
+断点选择（媒体查询临界点）
+最大宽度 最小宽度
+
+iphone4
+/*    Protrait and Landscape      */
+@media only screen
+	and (min-device-width: 320px)
+	and (max-device-width: 480px)
+	and (-webkit-min-device-pixel-ratio: 2){
+
+	}
+
+iphone5 and 5S
+/*    Protrait and Landscape      */
+@media only screen
+	and (min-device-width: 320px)
+	and (max-device-width: 568px)
+	and (-webkit-min-device-pixel-ratio: 2){
+
+	}
+
+以上两种是针对特定的设备 不建议 而是要针对屏幕大小
+
+0-480 小屏幕 小米 华为
+
+481-800 中屏幕
+
+801-1400 大屏幕
+
+1401+ 巨屏幕
+
+
+
+# 2.1 
+组织项目目录
+例如
+样式文件放到 CSS/*.CSS 
+jquery.js -> jquery.min.js 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
