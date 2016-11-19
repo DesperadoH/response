@@ -104,32 +104,425 @@ jquery.js -> jquery.min.js
 
 
 
+# 4.2
+px em rem
+
+em 想对的长度单位
+1.em想对参照物为父元素的font-size
+2.em具有继承的特点
+3.当没有设置font-size时，浏览器会有一个默认的em设置
+1em = 16px
+缺点： 容易混乱
+
+rem的想对参照物为根元素html
+当没有设置font-size时候，浏览器会有个默认的rem
+1rem = 16px 这点和em是一致的
+
+font-size: 62.5%   1em = 10px 便于rem与 px的转换 除以10就可以
+font-size: 100%    1rem = 16px
+
+
+不定宽高的水平垂直居中
+.myoff-wrapper{
+	position:absolute;
+	top:50%;
+	left:50%;
+	z-index:3;
+	-webkit-transform:translate(-50%,-50%);
+	border-radius:6px;
+	background:#fff;
+}
+.parent{
+	justify-content:center; //子元素水平居中
+	align-items:center; //子元素垂直居中
+	display:-webkit-flex;
+}
+
+IOS 安卓4.4以上可以最新flex布局 
+
+新flex布局
+display: -webkit-flex;
+-webkit-flex: 1;
+justify-content: center;
+align-items: center;
+
+旧flexbox布局
+display: -webkit-flex-box;
+-webkit-flex-box: 1;
+box-pack: center;
+box-align:center;
+
+
+
+@media screen and (mad-width:1024px){
+	
+}
+
+平板
+@media screen and (mad-width:980px){
+	
+}
+
+@media screen and (mad-width:720px){
+	
+}
+
+@media screen and (mad-width:640px){
+	
+}
+
+@media screen and (mad-width:320px){
+	
+}
+
+设计点
+1 百分比布局
+2 弹性图片max-width: 100% 
+3 重新布局显示与隐藏
+	同比例缩减元素尺寸
+	调整页面结构布局
+	经常要切换外置的元素用绝对定位 减少重绘
+
+rem = screen.width/20
+//默认320px
+html{
+	font-size: 32px;
+}
+
+//iphone6
+@media (min-device-width: 375px){
+	html{ font-size: 37.5px }
+}
+
+//iphone6 plus
+//iphone6
+@media (min-device-width: 414px){
+	html{ font-size: 41.4px }
+}
+
+//单行文本溢出
+.inaline{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+//多行文本溢出
+.intwoline{
+	display: -webkit-box !important;
+	overflow: hidden;
+
+	text-overflow: ellipsis;
+	word-break: break-all;
+
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2; 行数
+
+}
+
+
+交互
+zepto.js
+tab透传bug
+
+
+
+
+autoprefixer.github.io
+
+filter: grayscale(100%);
+
+
+浏览器输入：
+navigator.userAgent
+
+获得用户代理字符串 判断设备
+
+
+媒体查询用px rem em
+
+rem 可以动态设置媒体查询临界点（因为用户有可能更改浏览器字体大小）
+根据浏览器默认字体大小 1rem = 16px
+但兼容性不好可以用em代替
+也可以视情况用px
+
+!!!!!!轮播组件
+home owlcarousel2 github
+
+css/animate.css
+css/docs.theme.min.css
+
+jquery-3.1.1.min.js
+owl.carousel.min.js
+main.js
+
+
+
+响应式图片
+1. js或服务端
+2. srcset
+3. srcset配合sizes
+4. picture
+5. svg
+
+1.
+
+$(document).ready(function(){
+	function makeImageResponsive(){
+		var width = $(window).width();
+		var img = $('.content img');
+		if(width <= 480){
+			img.attr('src', 'img/480.png');
+		}else if(width <= 800){
+			img.attr('src', 'img/800.png');
+		}else{
+			img.attr('src', 'img/1600.png');
+		}
+	}
+
+	$(window).on('resize load', makeImageResponsive);
+})
+
+或者把屏幕或者设备信息写入cookie,这样就在服务器端决定返回哪种图片
+
+
+2.
+<img class="image" src="img/480.png" srcset="img/480.png 480w, img/800.png 800w, img/1600.png 1600w"  >
+
+RPR为2的时候 图片src并非240就变化 而是300出头 这是浏览器自己实现的
+
+
+3.
+.content {
+	width: 100%;
+	margin: 0 auto;
+}
+.content img{
+	display: block;
+	max-width: 100%;
+}
+
+
+srcset 配合 sizes 默认size="100vw" 100% viewport width
+<img class="image" src="img/480.png" srcset="img/480.png 480w, img/800.png 800w, img/1600.png 1600w" sizes="100vw" >
+
+屏幕宽度大于800的话 img宽度就是800px,否则就是100%vw
+<img class="image" 
+	src="img/480.png" srcset="img/480.png 480w, img/800.png 800w, img/1600.png 1600w" 
+	sizes="(min-width: 800px) 800px, 100vw" >
+
+<img class="image" 
+	src="img/480.png" srcset="img/480.png 480w, img/800.png 800w, img/1600.png 1600w" 
+	sizes="(min-width: 800px) calc(100vw - 20rem), 100vw" >
+
+4.
+
+picture标签
+<picture>
+	<source media="(max-width: 36em)"
+			srcset="img/tiananmen-s.jpg 768w" />
+	<source media="(orientation: landscape)"
+			srcset="img/tiananmen-s.jpg 768w" />
+	<source srcset="img/tiananmen.jpg 1800w" />
+	<img class="image" src="img/tiananmen.jpg" />
+<picture>
+
+5.svg
+
+
+polyfill 
+
+//scottjehl.github.io/picturefill/
+
+对于响应式图片最有名的就是picturefill库
+picturefill对于不支持picture的浏览器 用js获取srcset和
+媒体查询规则的设置 再通过js设置不同图片
+
+<div class="owl-carousel owl-theme">
+	<div class="item">
+		<picture>
+			<source srcset="img/ad001-l.png" media="(min-width: 50em)" />
+			<source srcset="img/ad001-m.png" media="(min-width: 30em)" />
+			<img src="img/ad001.png" alt="2015年度报告">
+		</picture>
+	</div>
+	<div class="item">
+		<picture>
+			<source srcset="img/ad002-l.png" media="(min-width: 50em)" />
+			<source srcset="img/ad002-m.png" media="(min-width: 30em)" />
+			<img src="img/ad001.png" alt="新年红包">
+		</picture>
+	</div>
+	<div class="item">
+		<picture>
+			<source srcset="img/ad003-l.png" media="(min-width: 50em)" />
+			<source srcset="img/ad003-m.png" media="(min-width: 30em)" />
+			<img src="img/ad001.png" alt="新手秘籍">
+		</picture>
+	</div>
+</div>
+
+
+tinyping.com 压缩图片
+
+
+7-1 Node.js 
+
+进入目录 node test.js
+
+新建readme.txt
+在test.js里:
+var fs = require('fs'); //fs node.js自带的库
+
+fs.readFile('readme.txt', 'utf-8', function(err, data)){
+	
+	if(err){
+		// 读取文件失败,显示错误
+		console.error(err);
+	} else {
+		// 读取文件成功，显示
+		console.log(data);
+	}
+}
+
+node test.js
+
+然后就在控制台输出 readme.txt里的内容
+
+上面这是异步的方法,也可以用同步的方法:
+var fs = require('fs');
+var data = fs.readFileSync('readme.txt', 'utf-8');
+console.log(data);
+
+一般来说不用同步方法 Node.js精髓是 事件驱动 异步 非阻塞I/O
+
+
+7-2 npm使用
+
+包的形式管理各个模块，也就是发挥某个作用的js文件
+
+npm install jquery / jQuery
+尽量安装用小写的
+
+!!!!!npm init
+
+package.json
+
+{
+	"name": "nodejslear",
+	"version": "1.0.0",
+	"description": "hello js",
+	"main": "test.js",  //入口文件
+	"dependencies": {
+		"jQuery": "^1.7.4" //生产环境
+			 ^大于1.7.4但是 大版本1是相同的 ; ~前两位相同
+	},
+	"devDependencies": {}, //开发环境
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1 "
+	},
+	"author": "",
+	"license": "ISC"
+
+}
+
+
+!!!!!npm install 根据package.json里面的 dependencies和 devDeoendencies两项
+下载相关的依赖项
+npm i 简写
+npm i --prodution 产品依赖的包
+npm i --dev       开发依赖的包
+
+安装全局的依赖包
+所有本地项目都能直接使用
+npm install -g express
+
+npm espress -v  --version
+
+此时安装了包 但是并没有更新在package.json里面
+ --save  --save-dev  
+
+npm install gulp --save
+
+卸载包
+npm uninstall gulp
+
+npm uninstall gulp --save 值卸载再生产环境下的gulp
+
+更新 npm update
+
+
+7-4 
+node.js 启动 server 服务
+http-server 不需要配置 直接通过命令行使用
+
+npm install http-server -g
+
+usage:
+http-server [path] [options]
+
+http-server 回车
+http://192.168.1.102:8080
+http://127.0.0.1:8080
+
+http-server 路径[path] -p 8888把端口改为8888
+
+
+8-1 
+桌面端如何调试
+虚拟机
+
+
+8-3 移动端测试
+友盟指数www.umindex.com 移动设备统计
+testin 云测试
+www.genymotion.net 安卓模拟器
+
+8-4 处理兼容性
+
+1. polyfill  
+2. html5shiv(https://github.com/aFarkas/html5shiv)
+3. respond (https://github.com/scottjehl/respond)
+4. https://modernizr.com
+
+caniuse.com/查询
+
+
+8-5 多设备调试
+www.browsersync.cn
+npm install -g browser-sync
+
+启动 browser-sync start --server "目录" --files "监听某个文件的改动(通配符*.js/css)"
 
 
 
 
 
+9-2 打包发布
 
+1.压缩 2.合并 3.增加版本号
 
+javascript-minifier.com手动方法
 
+1.grunt 2.gulp 自动化构建工具
+3.webpack 静态资源打包工具
 
+gulp:
+安装后
+创建一个gulpfile.js
 
+var gulp = require('gulp');
+// 定义一个任务
+gulp.task('hello', function(){
+	console.log('hellw gulp');
+})
 
+然后在命令行中: gulp 任务名称
+例如:
+gulp hello
 
+安装其他需要的包
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+npm install gulp-rev gulp-rev-replace gulp-useref gulp-filter gulp-yglify
+gulp-csso --save-dev
 

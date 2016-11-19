@@ -1,0 +1,210 @@
+# 移动端开发深度揭秘
+
+
+## 移动端基本环境
+
+### 测试
+
+chrome 360
+
+viewport 视口（可视区视口）
+  一般可视区宽度在移动端默认是980px
+	// 设计图要750以上取图
+
+qq强制竖屏或横屏显示
+name="x5-orientation" content="portrait|landscape"
+qq设置全屏
+name="x5-fullscreen" content="true"
+
+uc强制竖屏或横屏显示
+<meta name="screen-orientation" content="portrai|landscape" />
+uc全屏显示
+<meta name="full-screen" content="yes" />
+
+禁止识别电话号码和邮箱
+<meta name="format-detection" content="telephone=no,email=no"  />
+<a href="tel:18888888">请拨打电话18888888</a>
+<a href="mailto:motao@qq.com">请发送邮件</a>
+
+
+
+* 清除点击阴影或者颜色
+a,
+button,
+input {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+* 清除按钮圆角
+input,
+button {
+	-webkit-apperance: none;
+	border-radius: 0;
+}
+* 禁止选中文字设置(部分手机有效果)
+<p>test</p>
+body * {
+	-webkit-user-select: none;
+}
+
+
+
+ 文字缩放
+* 禁止用户修改字体大小
+body * {
+	-webkit-text-size-adjust: 100%;
+}
+* 默认字体
+body {
+	font-family: Helvetica;
+}
+
+
+
+
+
+移动端其他问题:
+
+foot Boosting
+(在一段文字我们没有给设置高度的在webkit内核下
+文字的大小被浏览器放大)
+1.给文字设置高度
+2.设置最大高度
+
+fixed固定定位(尽量不使用,坑留到事件再解决)
+
+把页面默认滚动条干掉
+html{
+	height:100%;
+	overflow:hidden;
+	position: relative;
+}
+把默认滚动条干掉后，就把滚动条放给body
+body{
+	height: 100%;
+	margin: 0;
+	overflow: auto;
+}
+(header就相对于html做绝对定位)
+header{
+	position: absolute;
+	width: 100%
+}
+(用绝对定位来模拟了固定定位，但遗留的问题，顶部回弹，header比body层级高挡住了滚动条)
+
+
+ios的body的overflow:hidden 还可以拖动
+给外面包一层warp 让内部的相对于warp做定位
+``
+<div class="warp">
+	<header>头部</header>
+	<section>
+		内容...
+	</section>
+</div>
+``
+html{
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+body{
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	position: relative;
+}
+
+.warp{
+	overflow: auto;
+	height: 100%
+}
+
+header{
+	position: absolute;
+	width: 200%;
+	height: 40px;
+	background: rgba(0,0,0,.5);
+}
+
+
+适配
+
+
+1.百分比适配
+百分比布局的话
+width设置为百分比 height固定px 这个适配方案有局限性一般不用
+
+2.用viewport适配
+(function(){
+	var w = window.screen.width;
+	var targetW = 320;
+	var scale = w / targetW;
+	var meta = document.createElement("meta");
+		meta.name = "viewport";
+		meta.content = "user-scalable=no,initial-scale=" + scale + ",minimum-scale=" + scale + ",maximum-scale=" + scale ;
+
+	document.head.appendChild(meta);
+	
+})()
+这样的话在各个不同分辨率下都是按css为320px的宽
+4个div
+div{
+	float:left;
+	width:80px;
+}
+.div1{
+	background:red;
+}
+.div2{
+	background:yellow;
+}
+.div3{
+	background:blue;
+}
+.div4{
+	background:green;
+}
+4个div撑满一行
+
+
+
+autoprefixer.github.io
+
+filter: grayscale(100%);
+
+
+3.rem适配
+
+
+4.弹性盒模型适配(box版 flex版)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
