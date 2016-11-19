@@ -245,7 +245,7 @@ header .main a.active {
 
 @media only screen and (max-width:30em){
 	header .main ul li {
-		line-height: : 3rem;
+		line-height: 3rem;
 	}
 	header .main ul li:first-child {
 		display: none;
