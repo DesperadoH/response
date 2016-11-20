@@ -526,3 +526,16 @@ gulp hello
 npm install gulp-rev gulp-rev-replace gulp-useref gulp-filter gulp-yglify
 gulp-csso --save-dev
 
+
+运行gulp也就运行了default任务
+
+响应式框架
+1. v3.bootcss.com  bootstrap的中文网站
+2. foundation.zurb.com 中文网站www.foundcss.com移动设备优先
+3. www.semantic-ui-cn.com 命名语义化
+4. www.purecss.org 轻量级响应式
+
+11-1 
+axure 原型设计
+www.axure.com.cn
+
